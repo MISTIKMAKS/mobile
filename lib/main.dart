@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'lab2.dart';
+import 'lab3.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,9 +13,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      routes: {
+        '/lab2': (context) => const Lab2(),
+        '/lab3': (context) => const Lab3(),
+      },
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.orange),
         useMaterial3: true,
       ),
       home: const MyHomePage(title: 'Home'),
@@ -39,21 +44,45 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         body: Container(
             color: Colors.black,
-            child: const Center(
+            child: Center(
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Text(
-                    'Hello, World!',
-                    style: TextStyle(
-                      color: Colors.orange,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 24.0,
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: TextButton(
+                      style: const ButtonStyle(
+                          backgroundColor:
+                              MaterialStatePropertyAll(Colors.orange)),
+                      child: const Text(
+                        "Lab 2",
+                        style: TextStyle(
+                          fontSize: 20.0,
+                          color: Colors.black,
+                        ),
+                      ),
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/lab2');
+                      },
                     ),
                   ),
-                  Icon(
-                    Icons.star,
-                    color: Colors.orange,
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: TextButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/lab3');
+                      },
+                      style: const ButtonStyle(
+                          backgroundColor:
+                              MaterialStatePropertyAll(Colors.orange)),
+                      child: const Text(
+                        "Lab 3",
+                        style: TextStyle(
+                          fontSize: 20.0,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
                   )
                 ],
               ),
