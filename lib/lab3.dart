@@ -53,8 +53,10 @@ class _Lab3State extends State<Lab3> {
 
   @override
   void dispose() {
-    _pedestrianTimer.cancel();
+    _redLightTimer = Timer(const Duration(microseconds: 1), () {});
     _redLightTimer.cancel();
+    _pedestrianTimer.cancel();
+
     super.dispose();
   }
 

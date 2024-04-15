@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'lab2.dart';
 import 'lab3.dart';
+import 'lab4.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,6 +17,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/lab2': (context) => const Lab2(),
         '/lab3': (context) => const Lab3(),
+        '/lab4': (context) => const Lab4(),
       },
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.orange),
@@ -35,6 +37,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  bool gender1 = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -83,7 +86,25 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                       ),
                     ),
-                  )
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: TextButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/lab4');
+                      },
+                      style: const ButtonStyle(
+                          backgroundColor:
+                              MaterialStatePropertyAll(Colors.orange)),
+                      child: const Text(
+                        "Lab 4",
+                        style: TextStyle(
+                          fontSize: 20.0,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             )));
