@@ -11,8 +11,15 @@ class Vacancy {
   final String name;
   final bool gender;
   final int salary;
+  final String description;
+  final String image;
 
-  Vacancy({required this.name, required this.gender, required this.salary});
+  Vacancy(
+      {required this.name,
+      required this.gender,
+      required this.salary,
+      required this.description,
+      required this.image});
 }
 
 class _Lab4State extends State<Lab4> {
@@ -24,16 +31,76 @@ class _Lab4State extends State<Lab4> {
     super.initState();
     _searchController = TextEditingController();
     _vacancies.addAll([
-      Vacancy(name: 'Software Engineer', gender: true, salary: 100000),
-      Vacancy(name: 'Data Scientist', gender: false, salary: 120000),
-      Vacancy(name: 'Product Manager', gender: true, salary: 150000),
-      Vacancy(name: 'UI/UX Designer', gender: false, salary: 90000),
-      Vacancy(name: 'Backend Developer', gender: true, salary: 110000),
-      Vacancy(name: 'Frontend Developer', gender: false, salary: 105000),
-      Vacancy(name: 'Marketing Specialist', gender: true, salary: 95000),
-      Vacancy(name: 'HR Manager', gender: false, salary: 130000),
-      Vacancy(name: 'Accountant', gender: true, salary: 85000),
-      Vacancy(name: 'Customer Support', gender: false, salary: 80000),
+      Vacancy(
+        name: 'Software Engineer',
+        gender: true,
+        salary: 100000,
+        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+        image: 'assets/image.png',
+      ),
+      Vacancy(
+        name: 'Data Scientist',
+        gender: false,
+        salary: 120000,
+        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+        image: 'assets/image.png',
+      ),
+      Vacancy(
+        name: 'Product Manager',
+        gender: true,
+        salary: 150000,
+        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+        image: 'assets/image.png',
+      ),
+      Vacancy(
+        name: 'UI/UX Designer',
+        gender: false,
+        salary: 90000,
+        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+        image: 'assets/image.png',
+      ),
+      Vacancy(
+        name: 'Backend Developer',
+        gender: true,
+        salary: 110000,
+        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+        image: 'assets/image.png',
+      ),
+      Vacancy(
+        name: 'Frontend Developer',
+        gender: false,
+        salary: 105000,
+        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+        image: 'assets/image.png',
+      ),
+      Vacancy(
+        name: 'Marketing Specialist',
+        gender: true,
+        salary: 95000,
+        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+        image: 'assets/image.png',
+      ),
+      Vacancy(
+        name: 'HR Manager',
+        gender: false,
+        salary: 130000,
+        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+        image: 'assets/image.png',
+      ),
+      Vacancy(
+        name: 'Accountant',
+        gender: true,
+        salary: 85000,
+        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+        image: 'assets/image.png',
+      ),
+      Vacancy(
+        name: 'Customer Support',
+        gender: false,
+        salary: 80000,
+        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+        image: 'assets/image.png',
+      ),
     ]);
     _filteredVacancies.addAll(_vacancies);
   }
@@ -85,126 +152,133 @@ class _Lab4State extends State<Lab4> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text('Lab 4'),
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(kToolbarHeight),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10.0),
-            child: TextField(
-              controller: _searchController,
-              onChanged: _filterVacancies,
-              decoration: const InputDecoration(
-                hintText: 'Search by Vacancy name',
+    return GestureDetector(
+      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+          title: const Text('Lab 4'),
+          bottom: PreferredSize(
+            preferredSize: const Size.fromHeight(kToolbarHeight),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10.0),
+              child: TextField(
+                controller: _searchController,
+                onChanged: _filterVacancies,
+                decoration: const InputDecoration(
+                  hintText: 'Search by Vacancy name',
+                ),
               ),
             ),
           ),
+          actions: [
+            IconButton(
+              onPressed: () {
+                _searchController.clear();
+                _filterVacancies('');
+              },
+              icon: const Icon(Icons.clear),
+            ),
+          ],
         ),
-        actions: [
-          IconButton(
-            onPressed: () {
-              _searchController.clear();
-              _filterVacancies('');
-            },
-            icon: const Icon(Icons.clear),
-          ),
-        ],
-      ),
-      body: ListView.builder(
-        itemCount: _filteredVacancies.length,
-        itemBuilder: (context, index) {
-          return Dismissible(
-            key: Key(_filteredVacancies[index].name),
-            onDismissed: (direction) {
-              setState(() {
-                _vacancies.removeWhere((vacancy) =>
-                    vacancy.name == _filteredVacancies[index].name);
-                _filteredVacancies.removeAt(index);
-              });
-            },
-            background: Container(
-              color: Colors.red,
-              alignment: Alignment.centerRight,
-              padding: const EdgeInsets.only(right: 20.0),
-              child: const Icon(
-                Icons.delete,
-                color: Colors.white,
+        body: ListView.builder(
+          itemCount: _filteredVacancies.length,
+          itemBuilder: (context, index) {
+            return Dismissible(
+              key: Key(_filteredVacancies[index].name),
+              onDismissed: (direction) {
+                setState(() {
+                  _vacancies.removeWhere((vacancy) =>
+                      vacancy.name == _filteredVacancies[index].name);
+                  _filteredVacancies.removeAt(index);
+                });
+              },
+              background: Container(
+                color: Colors.red,
+                alignment: Alignment.centerRight,
+                padding: const EdgeInsets.only(right: 20.0),
+                child: const Icon(
+                  Icons.delete,
+                  color: Colors.white,
+                ),
+              ),
+              child: ListTile(
+                onTap: () {
+                  Navigator.pushNamed(context, '/lab5',
+                      arguments: _filteredVacancies[index]);
+                },
+                title: Text(_filteredVacancies[index].name),
+                subtitle: Text(
+                    'Gender: ${_filteredVacancies[index].gender ? 'Female' : 'Male'}, Salary: ${_filteredVacancies[index].salary} USD'),
+              ),
+            );
+          },
+        ),
+        floatingActionButton: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: FloatingActionButton(
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AddDialog(
+                        key: UniqueKey(),
+                        onVacancyAdded: (Vacancy vacancy) {
+                          setState(() {
+                            _vacancies.add(vacancy);
+                            _filteredVacancies.add(vacancy);
+                          });
+                        },
+                      );
+                    },
+                  );
+                },
+                child: const Icon(Icons.add),
               ),
             ),
-            child: ListTile(
-              title: Text(_filteredVacancies[index].name),
-              subtitle: Text(
-                  'Gender: ${_filteredVacancies[index].gender ? 'Female' : 'Male'}, Salary: ${_filteredVacancies[index].salary} USD'),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: FloatingActionButton(
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return FilterDialog(
+                        key: UniqueKey(),
+                        onVacancyFilter: (int filter) {
+                          _filterVacanciesByGender(filter);
+                        },
+                      );
+                    },
+                  );
+                },
+                child: const Icon(Icons.filter_alt),
+              ),
             ),
-          );
-        },
-      ),
-      floatingActionButton: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: FloatingActionButton(
-              onPressed: () {
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return AddDialog(
-                      key: UniqueKey(),
-                      onVacancyAdded: (Vacancy vacancy) {
-                        setState(() {
-                          _vacancies.add(vacancy);
-                          _filteredVacancies.add(vacancy);
-                        });
-                      },
-                    );
-                  },
-                );
-              },
-              child: const Icon(Icons.add),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: FloatingActionButton(
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return SortDialog(
+                        key: UniqueKey(),
+                        onVacancySort: (int sort) {
+                          _sortVacancies(sort);
+                        },
+                      );
+                    },
+                  );
+                },
+                child: const Icon(Icons.sort_by_alpha),
+              ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: FloatingActionButton(
-              onPressed: () {
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return FilterDialog(
-                      key: UniqueKey(),
-                      onVacancyFilter: (int filter) {
-                        _filterVacanciesByGender(filter);
-                      },
-                    );
-                  },
-                );
-              },
-              child: const Icon(Icons.filter_alt),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: FloatingActionButton(
-              onPressed: () {
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return SortDialog(
-                      key: UniqueKey(),
-                      onVacancySort: (int sort) {
-                        _sortVacancies(sort);
-                      },
-                    );
-                  },
-                );
-              },
-              child: const Icon(Icons.sort_by_alpha),
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -426,8 +500,14 @@ class _AddDialogState extends State<AddDialog> {
         TextButton(
           onPressed: () {
             if (name.isNotEmpty && salary > 0) {
-              widget.onVacancyAdded(
-                  Vacancy(name: name, gender: gender, salary: salary));
+              widget.onVacancyAdded(Vacancy(
+                name: name,
+                gender: gender,
+                salary: salary,
+                description:
+                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+                image: 'assets/image.png',
+              ));
             }
             Navigator.of(context).pop();
           },
